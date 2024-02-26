@@ -1,0 +1,83 @@
+import aiohttp
+
+from ..config import API_PASSWORD, API_USERNAME, API_HOST
+from ..figaro.exceptions import InvalidRequest, ProductNotFound
+from ..figaro.base import FigaroAPIMethods, Figaro
+from ..figaro.models import FigaroProduct
+
+
+class FigaroAPI(Figaro):
+    def __init__(self):
+        self._host = API_HOST
+        self._username = API_USERNAME
+        self._password = API_PASSWORD
+        self.methods = FigaroAPIMethods
+
+    async def __aenter__(self):
+        self._session = aiohttp.ClientSession(
+            auth=aiohttp.BasicAuth(self._username, self._password)
+        )
+        return self
+
+
+    async def __aexit__(self, *err):
+        await self._session.close()
+        self._session = None
+
+
+    async def get_all_sales(self) -> dict:
+        async with self._session.get(
+                url=self._host + self.methods.all_sales
+        ) as response:
+            if response.status != 200:
+                raise InvalidRequest
+            return await response.json()
+
+
+    async def get_one_sale(self, product_code: str) -> dict:
+        async with self._session.get(
+                url=self._host + self.methods.one_sale.format(product_code)
+        ) as response:
+            if response.status != 200:
+                raise InvalidRequest
+            return await response.json()
+
+    async def create_cheque(self) -> dict:  # TODO
+        async with self._session.post(
+                url=self._host + self.methods.chek
+        ) as response:
+            if response.status != 200:
+                raise InvalidRequest
+            return await response.json()
+
+    async def get_product(self, product_code: str) -> dict:
+        async with self._session.get(
+            url=self._host + self.methods.get_product.format(product_code)
+        ) as response:
+            if response.status != 200:
+                raise InvalidRequest
+            product = await response.json()
+            if not product:
+                raise ProductNotFound
+            return product
+
+    async def create_product(self, product_name: str, product_weight: str, product_size: str):
+        product = FigaroProduct(name=product_name, weight=product_weight, size=product_size)
+        req_raw = product.model_dump()
+        async with self._session.post(
+            url=self._host + self.methods.get_product,
+            json=req_raw
+        ) as response:
+            if response.status != 200:
+                raise InvalidRequest
+            return await response.json()
+
+    async def get_cashier(self) -> dict:
+        async with self._session.get(
+            url=self._host + self.methods.get_cashier
+        ) as response:
+            if response.status != 200:
+                raise InvalidRequest
+            return await response.json()
+
+
