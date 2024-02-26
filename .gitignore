@@ -1,0 +1,16 @@
+# Pyhon byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+.pyc
+*.pyo
+
+.DS_Store
+
+.idea
+venv/
+venvBot/
+venvBOT/
+.venv
+.env
+
