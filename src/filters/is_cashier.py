@@ -9,6 +9,6 @@ class IsCashier(BaseFilter):
         async with FigaroAPI() as fg:
             cashiers = await fg.get_cashiers()
         for cashier in cashiers:
-            if cashier["ТелеграммID"] == str(message.from_user.id):
+            if cashier["ID"] == str(message.from_user.id):
                 return True
         return False

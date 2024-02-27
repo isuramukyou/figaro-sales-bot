@@ -73,4 +73,12 @@ class Figaro(ABC):
         Метод для получения всех кассиров.
         GET: other/cashiers
         """
+
+    @abstractmethod
+    async def create_cashier(self, name: str, kassa: str, user_id: int):
+        """
+        Метод для авторизации кассира
+        POST: other/createCashier
+        """
+        pass
     # --other

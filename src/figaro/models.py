@@ -7,6 +7,12 @@ class FigaroProduct(BaseModel):
     size: str = Field(description='Размер продукта')
 
 
+class Cashier(BaseModel):
+    name: str
+    kassa: str
+    ID: str
+
+
 class ChequeProducts(BaseModel):
     product: str
     amount: str

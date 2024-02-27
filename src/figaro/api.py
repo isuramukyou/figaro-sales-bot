@@ -5,7 +5,7 @@ import aiohttp
 from ..config import API_PASSWORD, API_USERNAME, API_HOST
 from ..figaro.exceptions import InvalidRequest, DataIsEmpty
 from ..figaro.base import FigaroAPIMethods, Figaro
-from ..figaro.models import FigaroProduct
+from ..figaro.models import FigaroProduct, Cashier
 
 
 class FigaroAPI(Figaro):
@@ -84,6 +84,16 @@ class FigaroAPI(Figaro):
             if not cashiers:
                 raise DataIsEmpty
             return cashiers
+
+    async def create_cashier(self, name: str, kassa: str, user_id: int):
+        cashier = Cashier(name=name, kassa=kassa, ID=str(user_id))
+        req_raw = cashier.model_dump()
+        async with self._session.post(
+                url=self._host + self.methods.create_cashier,
+                json=req_raw
+        ) as response:
+            if response.status != 200:
+                raise InvalidRequest
 
 
     @staticmethod

@@ -25,10 +25,11 @@ async def workshift_handler(message: types.Message):
 
 @mainmenu_router.message(F.text == "🏷️ Продажи")
 async def sales_handler(message: types.Message):
-    await message.answer(
-            _t.bold("🏷️ Меню управления продажами"),
-            reply_markup=reply.sales_kb()
-        )
+    await message.answer('coming soon')
+    # await message.answer(
+    #         _t.bold("🏷️ Меню управления продажами"),
+    #         reply_markup=reply.sales_kb()
+    #     )
 
 
 @mainmenu_router.message(F.text == "📦 Продукты")
