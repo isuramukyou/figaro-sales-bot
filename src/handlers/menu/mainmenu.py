@@ -7,6 +7,14 @@ mainmenu_router = Router()
 mainmenu_router.message.filter()
 
 
+@mainmenu_router.message(F.text == "Назад")
+async def back2menu_handler(message: types.Message):
+    await message.answer(
+            text=_t.bold('🏠 Главное меню'),
+            reply_markup=reply.mainmenu_kb()
+        )
+
+
 @mainmenu_router.message(F.text == "💼 Рабочая смена")
 async def workshift_handler(message: types.Message):
     await message.answer(
