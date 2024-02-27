@@ -3,7 +3,7 @@ import json
 import aiohttp
 
 from ..config import API_PASSWORD, API_USERNAME, API_HOST
-from ..figaro.exceptions import InvalidRequest, ProductNotFound
+from ..figaro.exceptions import InvalidRequest, DataIsEmpty
 from ..figaro.base import FigaroAPIMethods, Figaro
 from ..figaro.models import FigaroProduct
 
@@ -61,7 +61,7 @@ class FigaroAPI(Figaro):
                 raise InvalidRequest
             product = await self._json(await response.read())
             if not product:
-                raise ProductNotFound
+                raise DataIsEmpty
             return product
 
     async def create_product(self, product_name: str, product_weight: str, product_size: str) -> None:
@@ -74,13 +74,16 @@ class FigaroAPI(Figaro):
             if response.status != 200:
                 raise InvalidRequest
 
-    async def get_cashier(self) -> list:
+    async def get_cashiers(self) -> list:
         async with self._session.get(
-            url=self._host + self.methods.get_cashier
+            url=self._host + self.methods.get_cashiers
         ) as response:
             if response.status != 200:
                 raise InvalidRequest
-            return await self._json(await response.read())
+            cashiers = await self._json(await response.read())
+            if not cashiers:
+                raise DataIsEmpty
+            return cashiers
 
 
     @staticmethod

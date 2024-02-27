@@ -5,7 +5,7 @@ from aiogram.utils.text_decorations import html_decoration as _t
 
 from src.figaro.api import FigaroAPI
 from src.data.texts import Texts
-from src.figaro.exceptions import ProductNotFound, InvalidRequest
+from src.figaro.exceptions import DataIsEmpty, InvalidRequest
 
 products_router = Router()
 
@@ -23,7 +23,7 @@ async def state_get_product_code(message: types.Message, state: FSMContext):
     try:
         async with FigaroAPI() as fg:
             product = await fg.get_product(message.text.rjust(9, "0"))
-    except ProductNotFound:
+    except DataIsEmpty:
         return await message.answer(_t.bold('⚠️ Продукт не найден'))
     finally:
         await state.clear()

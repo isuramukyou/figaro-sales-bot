@@ -2,5 +2,5 @@ class InvalidRequest(Exception):
     pass
 
 
-class ProductNotFound(Exception):
+class DataIsEmpty(Exception):
     pass

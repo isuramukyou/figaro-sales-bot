@@ -1,13 +1,10 @@
 from aiogram import Router, F, types
-from aiogram.filters import StateFilter
 from aiogram.utils.text_decorations import html_decoration as _t
 
-from src.figaro.api import FigaroAPI
-from src.figaro.exceptions import InvalidRequest
 from src.keyboards import reply
 
 mainmenu_router = Router()
-
+mainmenu_router.message.filter()
 
 
 @mainmenu_router.message(F.text == "💼 Рабочая смена")

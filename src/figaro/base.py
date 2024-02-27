@@ -9,7 +9,7 @@ class FigaroAPIMethods:
     get_product: str = 'products/getProduct/{}'
     create_product: str = 'products/createProduct'
 
-    get_cashier: str = 'other/cashiers'
+    get_cashiers: str = 'other/cashiers'
     create_cashier: str = 'other/createCashier'
 
 
@@ -68,7 +68,7 @@ class Figaro(ABC):
 
     # ++other
     @abstractmethod  # NEW
-    async def get_cashier(self) -> list:
+    async def get_cashiers(self) -> list:
         """
         Метод для получения всех кассиров.
         GET: other/cashiers
