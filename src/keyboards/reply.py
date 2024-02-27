@@ -6,6 +6,15 @@ RB = KeyboardButton
 RKBuilder = ReplyKeyboardBuilder
 
 
+def mainmenu_kb():
+    return RKM(
+        keyboard=[
+            [RB(text="💼 Рабочая смена")],
+            [RB(text="📦 Продукты"), RB(text="🏷️ Продажи")]
+        ], resize_keyboard=True
+    )
+
+
 def products_kb():
     return RKM(
         keyboard=[
