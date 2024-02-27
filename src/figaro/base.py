@@ -2,14 +2,15 @@ from abc import ABC, abstractmethod
 
 
 class FigaroAPIMethods:
-    all_sales: str = 'Sales/all'
-    one_sale: str = 'Sales/One/{}'
-    chek: str = 'Sales/chek'
+    all_sales: str = 'sales/all'
+    one_sale: str = 'sales/one/{}'
+    chek: str = 'sales/chek'
 
-    get_product: str = 'products/get_product/{}'
-    create_product: str = 'products/create_product'
+    get_product: str = 'products/getProduct/{}'
+    create_product: str = 'products/createProduct'
 
-    get_cashier: str = 'other/cashier'
+    get_cashier: str = 'other/cashiers'
+    create_cashier: str = 'other/createCashier'
 
 
 class Figaro(ABC):
@@ -18,7 +19,7 @@ class Figaro(ABC):
     async def get_all_sales(self) -> list[dict]:
         """
         Метод для получения всех продаж.
-        GET: Sales/all
+        GET: sales/all
         """
         pass
 
@@ -26,7 +27,7 @@ class Figaro(ABC):
     async def get_one_sale(self, product_code: str) -> dict:
         """
         Метод для получения указанного продукта по его коду.
-        GET: Sales/One/{product_code}
+        GET: sales/one/{product_code}
         Args:
             product_code (str): Код продукта
         """
@@ -35,7 +36,7 @@ class Figaro(ABC):
     async def create_cheque(self) -> dict:  # TODO
         """
         Метод для создания чека.
-        POST: Sales/chek
+        POST: sales/chek
         Args: ...
         Raw: ...
         :return:
@@ -48,7 +49,7 @@ class Figaro(ABC):
     async def get_product(self, product_code: str) -> dict:
         """
         Метод для получения инфо указанного продукта.
-        GET: products/get_product/{product_code}
+        GET: products/getProduct/{product_code}
         Args:
             product_code (str): Код продукта
         """
@@ -57,7 +58,7 @@ class Figaro(ABC):
     async def create_product(self, product_name: str, product_weight: str, product_size: str) -> None:
         """
         Метод для создания продукта по его данным.
-        POST: products/create_product
+        POST: products/createProduct
         Raw:
         {"name": product_name,"weight": product_weight,"size": product_size}
         Args:
@@ -67,9 +68,9 @@ class Figaro(ABC):
 
     # ++other
     @abstractmethod  # NEW
-    async def get_cashier(self) -> dict:
+    async def get_cashier(self) -> list:
         """
-        Метод для получения инфо о кассире.
-        GET: other/cashier
+        Метод для получения всех кассиров.
+        GET: other/cashiers
         """
     # --other
