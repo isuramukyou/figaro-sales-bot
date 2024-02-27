@@ -3,8 +3,11 @@ from aiogram.filters import StateFilter, CommandStart, Command
 from aiogram.utils.text_decorations import html_decoration as _t
 
 from src.keyboards import reply
+from src.filters.is_cashier import IsCashier
+
 
 employee_router = Router()
+employee_router.message.filter(IsCashier())
 
 
 @employee_router.message(CommandStart(deep_link=True, magic=F.args == "fg"))
