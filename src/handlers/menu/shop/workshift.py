@@ -5,10 +5,10 @@ from aiogram.utils.text_decorations import html_decoration as _t
 from src.figaro.api import FigaroAPI
 from src.figaro.exceptions import InvalidRequest
 
-other_router = Router()
+workshift_router = Router()
 
 
-@other_router.message(F.text == "👨‍💼 Кассиры")
+@workshift_router.message(F.text == "👨‍💼 Кассиры")
 async def get_cashiers(message: types.Message):
     try:
         async with FigaroAPI() as fg:
